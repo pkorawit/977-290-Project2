@@ -56,14 +56,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script type="text/javascript">
       $("#signup").click(function() {
-        var newuser = {
-            username:"",
-            password:"",
-            firstname:"",
-            lastname:"",
-            email:"",
-            tel:""
-        };
+        //Get new data from form elements and store in newuser object
+        var newuser = { };
         newuser.username = $("#username").val();
         newuser.password = $("#password").val();
         newuser.firstname = $("#fname").val();
@@ -71,23 +65,12 @@
         newuser.email = $("#email").val();
         newuser.tel = $("#tel").val();
         console.log(newuser);
-
+        //Create url for insert new member
         var url = "http://membershipwebapi977290.azurewebsites.net/api/Members";
+        //Call the Web Api with POST method to insert new member
         $.post(url, newuser, function(data, status) {
           console.log("Inserted " + data);
         });
-
-
-
-
-
-
-
-
-
-
-
-
       });
     </script>
 

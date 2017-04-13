@@ -56,18 +56,21 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script type="text/javascript">
-
+        //Function for extract parameters from querystring
         $.urlParam = function(name){
             var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
             return results[1] || 0;
         }    
 
         $(function(){
+            //Get user Id from querystring parameters
             var id = $.urlParam('id');
+            //Create a Web Api url for getting a member info
             var url = "http://membershipwebapi977290.azurewebsites.net/api/Members/" + id;        
             console.log(url);
             $.get(url, function(data, status) {
                 console.log(data);
+                //Set data to form elements
                 $('#username').val(data.UserName);
                 $('#password').val(data.Password);
                 $('#fname').val(data.FirstName);
@@ -75,11 +78,14 @@
                 $('#email').val(data.Email);
                 $('#tel').val(data.Tel);
 
+                //If user click cancel, go to userinfo page
                 $("#cancel").click(function () {
                     window.location.href = "userinfo.html?id=" + data.Id; 
                 });  
 
+                //Save updated data
                 $("#save").click(function () {
+                    //Set update data to newuser object
                     var newuser = { };
                     newuser.Id = data.Id;
                     newuser.username = $("#username").val();
@@ -90,7 +96,9 @@
                     newuser.tel = $("#tel").val();
                     console.log(JSON.stringify(newuser));
 
+                    //Creat a url for update member data
                     var updateUrl = "http://membershipwebapi977290.azurewebsites.net/api/Members/" + data.Id;
+                    //Call Web Api with method PUT for updating
                     $.ajax({
                         url: updateUrl,
                         type: 'PUT',

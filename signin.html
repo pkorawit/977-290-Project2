@@ -51,23 +51,27 @@
     <script type="text/javascript">
     
       $("#signup").click(function() {
-         window.location.href = "signup.html";
+          //Redirect to Signup page
+          window.location.href = "signup.html";
       });
 
       $("#signin").click(function() {
+        //Set a url of password verification api
         var url = "http://membershipwebapi977290.azurewebsites.net/api/Members/signin?";
+        //Create a url contains username & password as querystring parameters 
         url += "username=" + $("#username").val();
         url += "&password=" + $("#password").val();
         console.log(url);
+        //Call the REST Api to verify username/password
         $.get(url, function(data, status) {
           console.log(data);
+          //Check if username & password are corrected
           if(data.Status == true){
-            //Goto User's info
+            //Goto User's info page
             window.location.href = "userinfo.html?id=" + data.CurrentUser.Id;
           }else{
-            //Goto Sign up
+            //Show error message
             $("#err").show();
-            //window.location.href = "signup.html";
           }
         });
       });
